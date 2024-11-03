@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            min-height: 100vh;
+            background-size: cover;
+            background-image: url("diwali8.jpg");
+        }
+
+        .parent-container {
+            background-color:whitesmoke;
+            width: 30%;
+            padding: 2%;
+            text-align: center;
+            margin: auto;
+            margin-top: 5%;
+            border-radius: 20px;
+        }
+
+        .title {
+            color: red;
+        }
+
+        .form-field {
+            margin: 10px
+        }
+
+        .form-field input,
+        .form-btn {
+            padding: 10px;
+            width: 80%;
+        }
+
+        @media(max-width:430px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .parent-container {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <form id="registrationform" class="parent-container" action="login.html">
+        <h3 class="title">REGISTRATION FORM</h3>
+        <div class="form-field"><input type="text" id="email" required placeholder="Enter your name" /></div>
+        <div class="form-field"><input type="password" id="password" required placeholder="Enter password" /></div>
+        <div class="form-field"><input type="password" id="confirm_password" required placeholder="confirm password" />
+        </div>
+        <div class="form-field"><input type="text" id="phone_number" required placeholder="Enter mobile number" /></div>
+
+        <button class="form-btn">submit</button>
+        <p>
+            Already have an account
+            <a href="login.html">login</a>
+        </p>
+    </form>
+
+    <script>
+        document.getElementById("registrationform").addEventListener("submit", function (e) {
+            e.preventDefault()
+            var email = document.getElementById("email").value
+            var password = document.getElementById("password").value
+            var confirm_password = document.getElementById("confirm_password").value
+            var phone_number = document.getElementById("phone_number").value
+            //password & confirmpassword
+            if (password != confirm_password) {
+                //donot store the new user
+                alert("password is not matching with confirmpassword")
+                return
+            }
+            //creating current new user
+            var newUser = { email, password, phone_number }
+            console.log(newUser)
+            //checking whether user exists or not
+            var users = JSON.parse(localStorage.getItem("users")) || [];
+            //using some method looking for the email
+            const emailExists = users.some(user => user.email === email)
+            //if exists then it gives true else false
+            if (emailExists) {
+                alert("user already exists try new email id")
+                return;
+            }
+            //storing the data in users variable
+            users.push(newUser)
+            //updating local storage also
+            localStorage.setItem("users",JSON.stringify(users))
+        
+            alert("registration sucessfully")
+            window.location.href = "login.html"
+        })
+    </script>
+</body>
+
+</html>
